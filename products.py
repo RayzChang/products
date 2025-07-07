@@ -1,13 +1,21 @@
-# 讀取舊的商品資料（避免每次新增時把原本資料蓋掉）
-products = []
-with open('products.csv', 'r', encoding='utf-8-sig') as f:
-	for line in f:
-		if '商品,價格' in line:
-			continue  # 跳過標題欄
-		name, price = line.strip().split(',')  # 快寫法
-		products.append([name, price])  # 存成二維清單
+# 匯入 os 模組，用來檢查檔案是否存在
+import os
 
-print(products)
+products = []
+
+# 檢查是否已經有資料檔案（products.csv）
+if os.path.isfile('products.csv'):
+	print('資料檔案存在，開始讀取')
+	with open('products.csv', 'r', encoding='utf-8-sig') as f:
+		for line in f:
+			if '商品,價格' in line:
+				continue  # 跳過標題欄
+			name, price = line.strip().split(',')
+			products.append([name, price])
+	print(products)
+else:
+	print('找不到資料檔案，將建立新的清單')
+
 
 # 使用者輸入新資料
 while True:
